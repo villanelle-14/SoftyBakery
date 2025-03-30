@@ -1,0 +1,11 @@
+/Library/
+/Temp/
+/Obj/
+/Build/
+/Builds/
+/Logs/
+/MemoryCaptures/
+/EditorBuild/
+/Assets/StreamingAssets
+/Assets/StreamingAssets.meta
+/BuildBundleInfo/
