@@ -1,8 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using GameBase;
-using TEngine;
+using Logic.UI.Base;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -96,7 +95,8 @@ namespace GameLogic
 
         public Sprite GetSprite(string spriteName)
         {
-            return GameModule.Resource.LoadAsset<Sprite>(spriteName);
+            return Resources.Load<Sprite>(spriteName);
+            //return GameModule.Resource.LoadAsset<Sprite>(spriteName);
         }
 
         public float duration;

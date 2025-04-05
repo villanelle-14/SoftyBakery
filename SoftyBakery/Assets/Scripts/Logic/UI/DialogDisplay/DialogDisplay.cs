@@ -2,16 +2,14 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
-using TEngine;
-using TEngine.Localization;
 using UnityEngine;
+using Archive.UnityExtension.Common;
+using DataModel.Plot;
 
 namespace GameLogic
 {
-    [Window(UILayer.UI)]
-    class DialogDisplay : UIWindow
+    class DialogDisplay : MonoBehaviour
     {
-        #region 脚本工具生成的代码
 
         private PortraitUI LeftOwnerSide;
         private PortraitUI rightOpposite;
@@ -20,17 +18,17 @@ namespace GameLogic
         private Transform m_tfBG;
         private Dictionary<string, GameObject> roleDialogs;
 
-        protected override void ScriptGenerator()
+        //protected override void ScriptGenerator()
+        protected void ScriptGenerator()
         {
-            m_btnUp = FindChildComponent<Button>("m_tfBG/PageChanger/m_btnUp");
-            m_btnDown = FindChildComponent<Button>("m_tfBG/PageChanger/m_btnDown");
-            m_tfBG = FindChild("m_tfBG");
+            m_btnUp = transform.FindChildComponent<Button>("m_tfBG/PageChanger/m_btnUp");
+            m_btnDown = transform.FindChildComponent<Button>("m_tfBG/PageChanger/m_btnDown");
+            m_tfBG = transform.Find("m_tfBG");
             m_btnUp.onClick.AddListener(OnClickUpBtn);
             m_btnDown.onClick.AddListener(OnClickDownBtn);
             roleDialogs = new Dictionary<string, GameObject>();
         }
 
-        #endregion
 
         private OptionGroupUI m_optionGroupUI;
 
@@ -42,11 +40,11 @@ namespace GameLogic
         //private bool isFullScreen = false;
         //private const float CurtainHeight = 100f;
 
-        protected override void BindMemberProperty()
+        protected void BindMemberProperty()
         {
-            m_optionGroupUI = FindChildComponent<OptionGroupUI>("m_tfBG/DialogBox/OptionGroup");
-            m_dialogBox = FindChildComponent<DialogBox>("m_tfBG/DialogBox");
-            bgController = FindChildComponent<BackgroundController>("CgBg");
+            m_optionGroupUI = transform.FindChildComponent<OptionGroupUI>("m_tfBG/DialogBox/OptionGroup");
+            m_dialogBox = transform.FindChildComponent<DialogBox>("m_tfBG/DialogBox");
+            bgController = transform.FindChildComponent<BackgroundController>("CgBg");
         }
 
         #region 事件
@@ -89,8 +87,9 @@ namespace GameLogic
         NormalState normalState;
         HideState hideState;*/
 
-        protected override void OnCreate()
+        protected void OnCreate(DialogDisplayModel UserData)
         {
+            //selfModel = UserData as DialogDisplayModel;
             selfModel = UserData as DialogDisplayModel;
             if (selfModel == null)
             {
@@ -99,29 +98,31 @@ namespace GameLogic
 
             pageIndex = 0;
             //dialogDisplayStateMachine = new StateMachine();
-            GameEvent.Send("LockMove");
+            //GameEvent.Send("LockMove");
 
             Debug.Log($"DialogDisplay oncreate");
 
             RefreshModel();
-            base.OnCreate();
+            //base.OnCreate();
             //createAnimaiton().Forget();
         }
 
-        protected override void OnRefresh()
+        //protected override void OnRefresh()
+        protected void OnRefresh(DialogDisplayModel UserData)
         {
-            base.OnRefresh();
+            //base.OnRefresh();
             if (selfModel.IsDirty)
             {
                 RefreshModel();
             }
         }
 
-        protected override void Close()
+        //protected override void Close()
+        protected void Close()
         {
-            UnRegisterEvent();
-            GameEvent.Send("UnLockMove");
-            base.Close();
+            //UnRegisterEvent();
+            //GameEvent.Send("UnLockMove");
+            //base.Close();
             //GameManager.Instance.GetSingleton<PlotManager>().HideOverSceneUI().Forget();
             Debug.Log($"Close");
         }
@@ -273,7 +274,7 @@ namespace GameLogic
             }
         }
 
-        public async UniTask CreateDialog(Section section)
+        /*public async UniTask CreateDialog(Section section)
         {
             if (section == null)
             {
@@ -288,15 +289,15 @@ namespace GameLogic
             isAwaitConfirm = true;
             Debug.Log($"DialogData.Length = {section.dialogContents.Count}");
             await PlayNextDialog();
-        }
+        }*/
 
         async UniTask StartDialog()
         {
-            if (selfSection == null)
+            /*if (selfSection == null)
             {
                 Debug.LogError($"StartDialog : selfSection == null");
                 return;
-            }
+            }*/
 
             pageIndex = 0;
             isAwaitConfirm = true;
@@ -318,8 +319,9 @@ namespace GameLogic
             GameObject left = GetRoleDialog(name);
             if (left == null)
             {
-                left = GameObject.Instantiate(
-                    GameModule.Resource.LoadAsset<GameObject>(name), m_tfBG);
+                //left = GameObject.Instantiate(
+                //GameModule.Resource.LoadAsset<GameObject>(name), m_tfBG);
+                left = GameObject.Instantiate(Resources.Load<GameObject>(name));
                 left.name = name;
             }
 
@@ -331,8 +333,9 @@ namespace GameLogic
             GameObject right = GetRoleDialog(name);
             if (right == null)
             {
-                right = GameObject.Instantiate(
-                    GameModule.Resource.LoadAsset<GameObject>(name), m_tfBG);
+                //right = GameObject.Instantiate(
+                //    GameModule.Resource.LoadAsset<GameObject>(name), m_tfBG);
+                right = GameObject.Instantiate(Resources.Load<GameObject>(name));
                 right.name = name;
             }
 
@@ -346,12 +349,12 @@ namespace GameLogic
             {
                 if (!string.IsNullOrEmpty(dialogContent.Event))
                 {
-                    GameEvent.Send(dialogContent.Event);
+                    //GameEvent.Send(dialogContent.Event);
                 }
 
                 Debug.Log($"dialogContent.DialogKey = {dialogContent.DialogKey}");
-                var dialogTextString = LocalizationManager.GetTranslation(dialogContent.DialogKey);
-
+                //var dialogTextString = LocalizationManager.GetTranslation(dialogContent.DialogKey);
+                var dialogTextString = dialogContent.DialogKey;
                 if (LeftOwnerSide == null)
                 {
                     InitLeft(dialogContent.LeftCharacter.Name);
@@ -433,7 +436,7 @@ namespace GameLogic
             //OnFinish?.Invoke();
             if (!string.IsNullOrEmpty(selfSection.EndEvent))
             {
-                GameEvent.Send(selfModel.DialogSection.EndEvent.GetHashCode());
+                //GameEvent.Send(selfModel.DialogSection.EndEvent.GetHashCode());
             }
 
 
@@ -472,11 +475,11 @@ namespace GameLogic
             //await m_dialogBox.Hide();
         }
 
-        protected override void RegisterEvent()
+        /*protected override void RegisterEvent()
         {
             EventMgr.AddEvent(PlotEventChart.PlayNextDialog.GetHashCode(), () => { PlayNextDialog(); });
             /*EventMgr.AddEvent(PlotEventChart.DialogOver,
-                () => { Close(); });*/
+                () => { Close(); });#1#
             EventMgr.AddEvent(PlotEventChart.DialogOver.GetHashCode(),
                 () => { Close(); });
             EventMgr.AddEvent(PlotEventChart.DialogEnterCgMode.GetHashCode(), () =>
@@ -499,7 +502,7 @@ namespace GameLogic
         void UnRegisterEvent()
         {
             EventMgr.Clear();
-        }
+        }*/
     }
 
     public class DialogDisplayModel
@@ -507,7 +510,7 @@ namespace GameLogic
         public Section DialogSection;
         public DialogDisplayMode DisplayMode;
 
-        public BaseRole DialogOwner;
+        //public BaseRole DialogOwner;
         public bool IsFullScreen;
         public bool IsDirty; //是否需要刷新
     }

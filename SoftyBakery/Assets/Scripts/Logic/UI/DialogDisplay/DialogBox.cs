@@ -1,20 +1,12 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using GameBase;
-using TEngine;
-using TEngine.Localization;
+using Logic.UI.Base;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace GameLogic
 {
-    interface IAsyncShowUI
-    {
-        float Duration { get; }
-        public UniTask Show();
-        public UniTask Hide();
-    }
     public class DialogBox : MonoBehaviour , IAsyncShowUI , IPointerClickHandler
     {
         [SerializeField] private Text DialogText;
@@ -38,7 +30,7 @@ namespace GameLogic
                 {
                     rockSpeed = value;
                     float languageSpeed = 0;
-                    switch (LocalizationManager.CurrentLanguage)
+                    /*switch (LocalizationManager.CurrentLanguage)
                     {
                         case "English":
                             languageSpeed = englishSpeed;
@@ -46,7 +38,7 @@ namespace GameLogic
                         default:
                             languageSpeed = chineseSpeed;
                             break;
-                    }
+                    }*/
                     rockRefreshTime = (int)(1000 / (languageSpeed * 20));
                 }
             }
@@ -74,7 +66,7 @@ namespace GameLogic
                 DialogText.text += DialogTextString[rockIndex];
                 Debug.Log($"Dialog: {DialogText.text}");
                 rockIndex++;
-                GameManager.Instance.GetSingleton<AudioManager>().SoundAudio("DialogPrint05");
+                //GameManager.Instance.GetSingleton<AudioManager>().SoundAudio("DialogPrint05");
                 //CancellationToken
                 await UniTask.Delay(rockRefreshTime/2);
             }
@@ -106,7 +98,7 @@ namespace GameLogic
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            GameEvent.Send(PlotEventChart.PlayNextDialog.GetHashCode());
+            //GameEvent.Send(PlotEventChart.PlayNextDialog.GetHashCode());
         }
     }
 }

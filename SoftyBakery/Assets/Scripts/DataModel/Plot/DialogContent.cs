@@ -1,6 +1,6 @@
 using System;
 
-namespace GameLogic
+namespace DataModel.Plot
 {
 
     [Serializable]
@@ -9,7 +9,7 @@ namespace GameLogic
         //None,Left,Right,Both,高亮人物
         public DialogSpeaker Speaker;
         //对话框内容抬头
-        //  SpeakerName : xxxxxxx
+        // SpeakerName : xxxxxxx
         //如果是空字符串，则不会添加 : 符号
         public string SpeakerName;
         //左侧人物ui预制体名字和人物表情

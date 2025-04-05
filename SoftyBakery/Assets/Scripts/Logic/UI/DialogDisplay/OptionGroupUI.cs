@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using TEngine;
-using TEngine.Localization;
+using DataModel.Plot;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,21 +40,22 @@ namespace GameLogic
                     go.transform.SetAsLastSibling();
                     btn = go.GetComponent<Button>();
                 }
-                string translation = LocalizationManager.GetTranslation(content.ChoiceTermKey);
-                var term = LocalizationManager.GetTermData(content.ChoiceTermKey);
-                if (term != null)
+                string translation = content.ChoiceTermKey;
+                //string translation = LocalizationManager.GetTranslation(content.ChoiceTermKey);
+                //var term = LocalizationManager.GetTermData(content.ChoiceTermKey);
+                /*if (term != null)
                 {
                     string t0 = term.GetTranslation(0);
                     string t1 = term.GetTranslation(1);
                     Debug.Log($"t0 = {t0} , t1 = {t1}");
-                }
+                }*/
 
-                Debug.Log($"clang = {LocalizationManager.CurrentLanguage} Key = {content.ChoiceTermKey} translation = {translation}");
+                //Debug.Log($"clang = {LocalizationManager.CurrentLanguage} Key = {content.ChoiceTermKey} translation = {translation}");
                 btn.GetComponentInChildren<Text>().text = translation;
                 btn.onClick.AddListener(() =>
                 {
                     //GameEvent.Send(content.ChoiceEvent);
-                    content.ChoiceEvent.SendEvent();
+                    //content.ChoiceEvent.SendEvent();
                     //Hide();
                 });
                 btn.gameObject.SetActive(true);
