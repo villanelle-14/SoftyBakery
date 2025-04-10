@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace GameLogic
 {
-    public class DialogBox : MonoBehaviour , IAsyncShowUI , IPointerClickHandler
+    public class DialogBox : MonoBehaviour , IAsyncShow , IPointerClickHandler
     {
         [SerializeField] private Text DialogText;
         

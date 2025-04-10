@@ -62,7 +62,7 @@ namespace GameBase
             if (_instance != null)
             {
                 SingletonSystem.Release(_instance.gameObject);
-                _instance = null;   
+                _instance = null;
             }
         }
 

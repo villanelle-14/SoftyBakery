@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace GameLogic
 {
-    public class PortraitUI : MonoBehaviour, IAsyncShowUI
+    public class Portrait : MonoBehaviour, IAsyncShow
     {
         [SerializeField] Image portraitImage;
 

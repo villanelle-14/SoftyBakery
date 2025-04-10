@@ -11,8 +11,8 @@ namespace GameLogic
     class DialogDisplay : MonoBehaviour
     {
 
-        private PortraitUI LeftOwnerSide;
-        private PortraitUI rightOpposite;
+        private Portrait LeftOwnerSide;
+        private Portrait rightOpposite;
         private Button m_btnUp;
         private Button m_btnDown;
         private Transform m_tfBG;
@@ -325,7 +325,7 @@ namespace GameLogic
                 left.name = name;
             }
 
-            LeftOwnerSide = left.GetComponent<PortraitUI>();
+            LeftOwnerSide = left.GetComponent<Portrait>();
         }
 
         private void InitRight(string name)
@@ -339,7 +339,7 @@ namespace GameLogic
                 right.name = name;
             }
 
-            rightOpposite = right.GetComponent<PortraitUI>();
+            rightOpposite = right.GetComponent<Portrait>();
         }
 
         async UniTask PlayDialog(DialogContent dialogContent)
